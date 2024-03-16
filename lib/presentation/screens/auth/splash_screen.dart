@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:real_world_projects/presentation/screens/sign_in_screen.dart';
+import 'package:real_world_projects/presentation/screens/auth/sign_in_screen.dart';
 import 'package:real_world_projects/presentation/utils/assets_path.dart';
 import 'package:real_world_projects/presentation/widgets/background_widget.dart';
 
@@ -22,7 +22,7 @@ class _Splash_ScreenState extends State<Splash_Screen> {
     await Future.delayed(const Duration(seconds: 2));
     if (mounted) {
       Navigator.pushReplacement(
-        context as BuildContext,
+        context,
         MaterialPageRoute(builder: (context) => const SignInScreen()),
       );
     }

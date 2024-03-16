@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
@@ -17,7 +18,7 @@ class backgroundImage extends StatelessWidget {
               width: double.infinity,
               height: double.infinity,
               fit: BoxFit.cover),
-          child,
+          SafeArea(child: child),
         ],
       ),
     );
