@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:real_world_projects/presentation/screens/auth/splash_screen.dart';
+import 'package:real_world_projects/presentation/screens/profile_screen.dart';
 import 'package:real_world_projects/presentation/utils/app_color.dart';
 
 class TaskManager extends StatefulWidget {
@@ -15,6 +16,10 @@ class _TaskManagerState extends State<TaskManager> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      routes: {
+        '/profile': (context) => const ProfileScreen(),
+        // Add more named routes as needed
+      },
       navigatorKey: TaskManager.navigatorKey,
       title: 'Task Manager',
       home: const Splash_Screen(),

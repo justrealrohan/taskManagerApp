@@ -7,13 +7,15 @@ import '../utils/app_color.dart';
 
 PreferredSizeWidget get ProfileBar {
   return PreferredSize(
-    preferredSize: Size.fromHeight(kToolbarHeight), // Set the height of the AppBar
+    preferredSize: const Size.fromHeight(kToolbarHeight), // Set the height of the AppBar
     child: GestureDetector(
       onTap: () {
-        Navigator.push(
-          TaskManager.navigatorKey.currentState!.context,
-          MaterialPageRoute(builder: (context) => ProfileScreen()), // Navigate to ProfileScreen
-        );
+        if (ModalRoute.of(TaskManager.navigatorKey.currentState!.context)!.settings.name != '/profile') {
+          Navigator.push(
+            TaskManager.navigatorKey.currentState!.context,
+            MaterialPageRoute(builder: (context) => const ProfileScreen()), // Navigate to ProfileScreen
+          );
+        }
       },
       child: AppBar(
         automaticallyImplyLeading: false,

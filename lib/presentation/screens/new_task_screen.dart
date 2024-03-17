@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:real_world_projects/presentation/screens/add_new_task_screen.dart';
 import 'package:real_world_projects/presentation/widgets/background_widget.dart';
+import 'package:real_world_projects/presentation/widgets/profile_bar.dart';
 
-import '../widgets/profile_bar.dart';
 import '../widgets/task_card.dart';
 import '../widgets/task_counter_card.dart';
 
@@ -39,7 +39,7 @@ class _NewTaskScreenState extends State<NewTaskScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: ProfileBar,
+      appBar: ProfileBar, // Use AppBar widget
       body: backgroundImage(
         child: Column(
           children: [

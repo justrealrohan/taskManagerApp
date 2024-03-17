@@ -18,7 +18,7 @@ class _AddNewTaskScreenState extends State<AddNewTaskScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: ProfileBar,
+      appBar: ProfileBar, // Use AppBar widget
       body: backgroundImage(
         child: Padding(
           padding: const EdgeInsets.all(24.0),

@@ -22,27 +22,64 @@ class _ProfileScreenState extends State<ProfileScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: ProfileBar,
+      appBar: ProfileBar, // Use AppBar widget
       body: backgroundImage(
-        child: Padding(
-          padding: const EdgeInsets.all(24.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const SizedBox(height: 60),
-              Text(
-                'Update Profile',
-                style: Theme.of(context)
-                    .textTheme
-                    .titleLarge
-                    ?.copyWith(fontSize: 24),
-              ),
-              Container(
-                child: Form(
+        child: SingleChildScrollView(
+          child: Padding(
+            padding: const EdgeInsets.all(24.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const SizedBox(height: 60),
+                Text(
+                  'Update Profile',
+                  style: Theme.of(context)
+                      .textTheme
+                      .titleLarge
+                      ?.copyWith(fontSize: 24),
+                ),
+                Form(
                   key: _formKey,
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
+                      const SizedBox(
+                        height: 10,
+                      ),
+                      Row(
+                        children: [
+                          Container(
+                            width: 60,
+                            height: 60,
+                            decoration: BoxDecoration(
+                              color: Colors.grey,
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                            child: const Icon(
+                              Icons.camera_alt_outlined,
+                              size: 30,
+                              color: Colors.white,
+                            ),
+                          ),
+                          Expanded(
+                            child: Container(
+                              width: double.infinity,
+                              padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 16),
+                              decoration: BoxDecoration(
+                                color: Colors.white,
+                                borderRadius: BorderRadius.circular(10),
+                              ),
+                              child: const Text(
+                                'Upload Profile Picture',
+                                style: TextStyle(
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.w600,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
                       const SizedBox(
                         height: 10,
                       ),
@@ -125,8 +162,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     ],
                   ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),

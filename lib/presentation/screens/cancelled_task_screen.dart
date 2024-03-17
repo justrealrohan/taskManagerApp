@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:real_world_projects/presentation/widgets/background_widget.dart';
+import 'package:real_world_projects/presentation/widgets/profile_bar.dart';
 
-import '../widgets/profile_bar.dart';
 import '../widgets/task_card.dart';
 
 class CancelledTaskScreen extends StatefulWidget {
@@ -12,10 +12,11 @@ class CancelledTaskScreen extends StatefulWidget {
 }
 
 class _CancelledTaskScreenState extends State<CancelledTaskScreen> {
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: ProfileBar,
+      appBar: ProfileBar, // Use AppBar widget
       body: backgroundImage(
         child: ListView.builder(
           itemBuilder: (BuildContext context, int index) {
