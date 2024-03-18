@@ -34,4 +34,9 @@ class AuthController {
     return result != null;
   }
 
+  static Future<void> clearUserData() async{
+    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+    await sharedPreferences.clear();
+  }
+
 }

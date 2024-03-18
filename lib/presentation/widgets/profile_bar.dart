@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:real_world_projects/app.dart';
+import 'package:real_world_projects/presentation/controllers/auth_controller.dart';
 import 'package:real_world_projects/presentation/screens/auth/sign_in_screen.dart';
 import 'package:real_world_projects/presentation/screens/profile_screen.dart'; // Import the ProfileScreen
 
@@ -7,13 +8,19 @@ import '../utils/app_color.dart';
 
 PreferredSizeWidget get ProfileBar {
   return PreferredSize(
-    preferredSize: const Size.fromHeight(kToolbarHeight), // Set the height of the AppBar
+    preferredSize:
+        const Size.fromHeight(kToolbarHeight), // Set the height of the AppBar
     child: GestureDetector(
       onTap: () {
-        if (ModalRoute.of(TaskManager.navigatorKey.currentState!.context)!.settings.name != '/profile') {
+        if (ModalRoute.of(TaskManager.navigatorKey.currentState!.context)!
+                .settings
+                .name !=
+            '/profile') {
           Navigator.push(
             TaskManager.navigatorKey.currentState!.context,
-            MaterialPageRoute(builder: (context) => const ProfileScreen()), // Navigate to ProfileScreen
+            MaterialPageRoute(
+                builder: (context) =>
+                    const ProfileScreen()), // Navigate to ProfileScreen
           );
         }
       },
@@ -48,11 +55,13 @@ PreferredSizeWidget get ProfileBar {
               ),
             ),
             IconButton(
-              onPressed: () {
+              onPressed: () async {
+                await AuthController.clearUserData();
                 Navigator.pushAndRemoveUntil(
                     TaskManager.navigatorKey.currentState!.context,
-                    MaterialPageRoute(builder: (context) => const SignInScreen()),
-                        (route) => false);
+                    MaterialPageRoute(
+                        builder: (context) => const SignInScreen()),
+                    (route) => false);
               },
               style: IconButton.styleFrom(
                 foregroundColor: Colors.white,

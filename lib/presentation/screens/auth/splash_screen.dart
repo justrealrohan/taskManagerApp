@@ -21,7 +21,7 @@ class _Splash_ScreenState extends State<Splash_Screen> {
   }
 
   Future<void> _MoveToSignInScreen() async {
-    await Future.delayed(const Duration(seconds: 1));
+    await Future.delayed(const Duration(seconds: 2));
 
     bool loginState = await AuthController.isUserLoggedIn();
 
