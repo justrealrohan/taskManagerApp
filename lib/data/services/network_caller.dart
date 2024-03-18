@@ -58,7 +58,16 @@ class NetworkCaller {
           statusCode: 200,
           responseBody: decodedResponse,
         );
-      } else {
+      } else if(response.statusCode == 401) {
+        final decodedResponse = jsonDecode(response.body);
+        return ResponseObject(
+          isSuccess: false,
+          statusCode: response.statusCode,
+          responseBody: decodedResponse,
+          errorMessage: 'Invalid credentials',
+        );
+      }
+      else {
         return ResponseObject(
           isSuccess: false,
           statusCode: response.statusCode,

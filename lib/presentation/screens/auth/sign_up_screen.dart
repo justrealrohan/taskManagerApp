@@ -1,6 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:real_world_projects/data/services/network_caller.dart';
+import 'package:real_world_projects/data/utility/urls.dart';
 import 'package:real_world_projects/presentation/utils/app_color.dart';
 import 'package:real_world_projects/presentation/widgets/background_widget.dart';
+
+import '../../../data/models/response_object.dart';
+import '../../widgets/snack_bar_massege.dart';
 
 class SignUpScreen extends StatefulWidget {
   const SignUpScreen({super.key});
@@ -10,14 +15,13 @@ class SignUpScreen extends StatefulWidget {
 }
 
 class _SignUpScreenState extends State<SignUpScreen> {
-
   final _emailController = TextEditingController();
   final _firstNameController = TextEditingController();
   final _lastNameController = TextEditingController();
   final _mobileNumberController = TextEditingController();
   final _passwordController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
-
+  bool _isLoading = false;
 
   @override
   Widget build(BuildContext context) {
@@ -40,6 +44,12 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     height: 10,
                   ),
                   TextFormField(
+                    validator: (value) {
+                      if (value!.isEmpty) {
+                        return 'Please enter your email';
+                      }
+                      return null;
+                    },
                     controller: _emailController,
                     keyboardType: TextInputType.emailAddress,
                     decoration: const InputDecoration(
@@ -51,6 +61,12 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     height: 10,
                   ),
                   TextFormField(
+                    validator: (value) {
+                      if (value!.isEmpty) {
+                        return 'Please enter your first name';
+                      }
+                      return null;
+                    },
                     controller: _firstNameController,
                     keyboardType: TextInputType.text,
                     decoration: const InputDecoration(
@@ -62,6 +78,12 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     height: 10,
                   ),
                   TextFormField(
+                    validator: (value) {
+                      if (value!.isEmpty) {
+                        return 'Please enter your last name';
+                      }
+                      return null;
+                    },
                     controller: _lastNameController,
                     keyboardType: TextInputType.text,
                     decoration: const InputDecoration(
@@ -73,6 +95,12 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     height: 10,
                   ),
                   TextFormField(
+                    validator: (value) {
+                      if (value!.isEmpty) {
+                        return 'Please enter your mobile number';
+                      }
+                      return null;
+                    },
                     controller: _mobileNumberController,
                     keyboardType: TextInputType.number,
                     decoration: const InputDecoration(
@@ -84,6 +112,15 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     height: 10,
                   ),
                   TextFormField(
+                    validator: (value) {
+                      if (value!.isEmpty) {
+                        return 'Please enter your password';
+                      }
+                      if (value.length <= 6) {
+                        return 'Password must be at least 6 characters';
+                      }
+                      return null;
+                    },
                     controller: _passwordController,
                     obscureText: true,
                     decoration: const InputDecoration(
@@ -96,9 +133,17 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   ),
                   SizedBox(
                     width: double.infinity,
-                    child: ElevatedButton(
-                      onPressed: () {},
-                      child: const Icon(Icons.arrow_circle_right_outlined),
+                    child: Visibility(
+                      visible: _isLoading == false,
+                      replacement: const Center(
+                        child: CircularProgressIndicator(),
+                      ),
+                      child: ElevatedButton(
+                        onPressed: () {
+                          _signUp();
+                        },
+                        child: const Icon(Icons.arrow_circle_right_outlined),
+                      ),
                     ),
                   ),
                   const SizedBox(
@@ -138,6 +183,37 @@ class _SignUpScreenState extends State<SignUpScreen> {
       ),
     );
   }
+
+  void _signUp() async {
+    setState(() {
+      _isLoading = true;
+    });
+    if (_formKey.currentState!.validate()) {
+      Map<String, dynamic> userData = {
+        'email': _emailController.text.trim(),
+        'firstName': _firstNameController.text.trim(),
+        'lastName': _lastNameController.text.trim(),
+        'mobile': _mobileNumberController.text.trim(),
+        'password': _passwordController.text,
+      };
+      final ResponseObject response =
+          await NetworkCaller.postRequest(Urls.registration, userData);
+      setState(() {
+        _isLoading = false;
+      });
+      if (response.isSuccess) {
+        if (mounted) {
+          showSnackBarMessage(context, 'Registration Successful');
+        }
+      } else {
+        if (mounted) {
+          showSnackBarMessage(context, 'Registration Failed', true);
+          Navigator.pop(context);
+        }
+      }
+    }
+  }
+
   @override
   void dispose() {
     _emailController.dispose();
