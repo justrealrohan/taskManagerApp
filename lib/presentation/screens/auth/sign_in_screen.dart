@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:real_world_projects/data/models/login_response.dart';
 import 'package:real_world_projects/data/services/network_caller.dart';
+import 'package:real_world_projects/presentation/controllers/auth_controller.dart';
 import 'package:real_world_projects/presentation/screens/auth/email_verification_screen.dart';
 import 'package:real_world_projects/presentation/screens/main_bottom_nav_screen.dart';
 import 'package:real_world_projects/presentation/screens/auth/sign_up_screen.dart';
@@ -181,6 +183,10 @@ class _SignInScreenState extends State<SignInScreen> {
             ),
             (route) => false);
       }
+      LoginResponse loginResponse = LoginResponse.fromJson(response.responseBody);
+      await AuthController.saveUserData(loginResponse.userData!);
+      await AuthController.saveUserToken(loginResponse.token!);
+
     } else {
       if (mounted) {
         showSnackBarMessage(context, response.errorMessage ?? 'Login Failed, Please try again');
