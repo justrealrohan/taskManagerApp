@@ -23,24 +23,20 @@ class _Splash_ScreenState extends State<Splash_Screen> {
   Future<void> _MoveToSignInScreen() async {
     await Future.delayed(const Duration(seconds: 2));
 
+    if (!mounted) return;
+
     bool loginState = await AuthController.isUserLoggedIn();
 
     if (mounted) {
       if (loginState) {
         Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(
-            builder: (context) => const MainBottomNavScreen(),
-          ),
-        );
+            context,
+            MaterialPageRoute(
+                builder: (context) => const MainBottomNavScreen()));
+      } else {
+        Navigator.pushReplacement(context,
+            MaterialPageRoute(builder: (context) => const SignInScreen()));
       }
-    } else {
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(
-          builder: (context) => const SignInScreen(),
-        ),
-      );
     }
   }
 

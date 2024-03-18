@@ -55,7 +55,7 @@ PreferredSizeWidget get ProfileBar {
               ),
             ),
             IconButton(
-              onPressed: () async {
+              onPressed: () async{
                 await AuthController.clearUserData();
                 Navigator.pushAndRemoveUntil(
                     TaskManager.navigatorKey.currentState!.context,
