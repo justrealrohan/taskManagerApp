@@ -9,7 +9,7 @@ import 'package:real_world_projects/presentation/widgets/background_widget.dart'
 
 import '../../../data/models/response_object.dart';
 import '../../../data/utility/urls.dart';
-import '../../widgets/snack_bar_massege.dart';
+import '../../widgets/snack_bar_massage.dart';
 
 class SignInScreen extends StatefulWidget {
   const SignInScreen({super.key});

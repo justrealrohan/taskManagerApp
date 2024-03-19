@@ -33,20 +33,20 @@ PreferredSizeWidget get ProfileBar {
             const SizedBox(
               width: 10,
             ),
-            const Expanded(
+            Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    'Rabbil Hasan',
-                    style: TextStyle(
+                    AuthController.userData?.fullName ?? '',
+                    style: const TextStyle(
                         fontSize: 16,
                         fontWeight: FontWeight.bold,
                         color: Colors.white),
                   ),
                   Text(
-                    'rabbil@gmail.com',
-                    style: TextStyle(
+                    AuthController.userData?.email ?? '',
+                    style: const TextStyle(
                         fontSize: 12,
                         fontWeight: FontWeight.w400,
                         color: Colors.white),
@@ -55,7 +55,7 @@ PreferredSizeWidget get ProfileBar {
               ),
             ),
             IconButton(
-              onPressed: () async{
+              onPressed: () async {
                 await AuthController.clearUserData();
                 Navigator.pushAndRemoveUntil(
                     TaskManager.navigatorKey.currentState!.context,

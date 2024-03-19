@@ -2,13 +2,16 @@ import 'dart:convert';
 import 'dart:developer';
 
 import 'package:http/http.dart';
+import 'package:real_world_projects/presentation/controllers/auth_controller.dart';
 import '../models/response_object.dart';
 
 class NetworkCaller {
   static Future<ResponseObject> getRequest(String url) async {
     try {
-      log('URL: $url');
-      final Response response = await get(Uri.parse(url));
+      final Response response = await get(
+        Uri.parse(url),
+        headers: {'token': AuthController.accessToken ?? ''},
+      );
       log('Response: ${response.statusCode}');
       log('Response: ${response.body}');
 
@@ -46,6 +49,7 @@ class NetworkCaller {
         body: jsonEncode(body),
         headers: {
           'Content-Type': 'application/json',
+          'token': AuthController.accessToken ?? ' '
         },
       );
       log('Response: ${response.statusCode}');
@@ -58,7 +62,7 @@ class NetworkCaller {
           statusCode: 200,
           responseBody: decodedResponse,
         );
-      } else if(response.statusCode == 401) {
+      } else if (response.statusCode == 401) {
         final decodedResponse = jsonDecode(response.body);
         return ResponseObject(
           isSuccess: false,
@@ -66,8 +70,7 @@ class NetworkCaller {
           responseBody: decodedResponse,
           errorMessage: 'Invalid credentials',
         );
-      }
-      else {
+      } else {
         return ResponseObject(
           isSuccess: false,
           statusCode: response.statusCode,

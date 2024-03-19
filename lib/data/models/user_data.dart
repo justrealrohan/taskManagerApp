@@ -30,4 +30,8 @@ class UserData {
     data['photo'] = photo; // Correctly refer to the instance variable
     return data;
   }
+
+  String get fullName{
+    return "$firstName $lastName";
+  }
 }

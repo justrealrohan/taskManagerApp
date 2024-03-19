@@ -5,7 +5,7 @@ import 'package:real_world_projects/presentation/utils/app_color.dart';
 import 'package:real_world_projects/presentation/widgets/background_widget.dart';
 
 import '../../../data/models/response_object.dart';
-import '../../widgets/snack_bar_massege.dart';
+import '../../widgets/snack_bar_massage.dart';
 
 class SignUpScreen extends StatefulWidget {
   const SignUpScreen({super.key});
