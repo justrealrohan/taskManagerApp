@@ -16,6 +16,7 @@ class _TaskManagerState extends State<TaskManager> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       routes: {
         '/profile': (context) => const ProfileScreen(),
         // Add more named routes as needed
@@ -24,6 +25,11 @@ class _TaskManagerState extends State<TaskManager> {
       title: 'Task Manager',
       home: const Splash_Screen(),
       theme: ThemeData(
+        appBarTheme: const AppBarTheme(
+          iconTheme: const IconThemeData(
+            color: Colors.white,
+          ),
+        ),
         fontFamily: 'Roboto',
         inputDecorationTheme: const InputDecorationTheme(
           hintStyle: TextStyle(

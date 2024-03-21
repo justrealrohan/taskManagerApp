@@ -9,23 +9,17 @@ import '../utils/app_color.dart';
 PreferredSizeWidget get ProfileBar {
   return PreferredSize(
     preferredSize:
-        const Size.fromHeight(kToolbarHeight), // Set the height of the AppBar
+    const Size.fromHeight(kToolbarHeight), // Set the height of the AppBar
     child: GestureDetector(
       onTap: () {
-        if (ModalRoute.of(TaskManager.navigatorKey.currentState!.context)!
-                .settings
-                .name !=
-            '/profile') {
-          Navigator.push(
-            TaskManager.navigatorKey.currentState!.context,
-            MaterialPageRoute(
-                builder: (context) =>
-                    const ProfileScreen()), // Navigate to ProfileScreen
-          );
-        }
+        Navigator.push(
+          TaskManager.navigatorKey.currentState!.context,
+          MaterialPageRoute(
+            builder: (context) =>
+            const ProfileScreen(),), // Navigate to ProfileScreen
+        );
       },
       child: AppBar(
-        automaticallyImplyLeading: false,
         backgroundColor: AppColors.themeColor,
         title: Row(
           children: [
@@ -47,9 +41,10 @@ PreferredSizeWidget get ProfileBar {
                   Text(
                     AuthController.userData?.email ?? '',
                     style: const TextStyle(
-                        fontSize: 12,
-                        fontWeight: FontWeight.w400,
-                        color: Colors.white),
+                      fontSize: 12,
+                      fontWeight: FontWeight.w400,
+                      color: Colors.white,
+                    ),
                   ),
                 ],
               ),

@@ -18,81 +18,93 @@ class _AddNewTaskScreenState extends State<AddNewTaskScreen> {
   final _titleController = TextEditingController();
   final _descriptionController = TextEditingController();
   bool _isLoading = false;
+  bool _shouldRefreshNewTask = false;
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: ProfileBar, // Use AppBar widget
-      body: backgroundImage(
-        child: Padding(
-          padding: const EdgeInsets.all(24.0),
-          child: Form(
-            key: _formKey,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const SizedBox(height: 100),
-                Text(
-                  'Add New Task',
-                  style: Theme.of(context)
-                      .textTheme
-                      .titleLarge
-                      ?.copyWith(fontSize: 24),
-                ),
-                const SizedBox(
-                  height: 16,
-                ),
-                TextFormField(
-                  validator: (String? value){
-                    if(value?.trim().isEmpty ?? true){
-                      return 'Enter your Title';
-                    }
-                    return null;
-                  },
-                  controller: _titleController,
-                  decoration: const InputDecoration(
-                    labelText: 'Task Title',
-                    hintText: 'Enter the title of the task',
-                  ),
-                ),
-                const SizedBox(
-                  height: 16,
-                ),
-                TextFormField(
-                  validator: (String? value){
-                    if(value?.trim().isEmpty ?? true){
-                      return 'Enter your Description';
-                    }
-                    return null;
-                  },
-                  controller: _descriptionController,
-                  maxLines: 6,
-                  decoration: const InputDecoration(
-                    labelText: 'Task Description',
-                    hintText: 'Enter the description of the task',
-                  ),
-                ),
-                const SizedBox(
-                  height: 16,
-                ),
-                SizedBox(
-                  width: double.infinity,
-                  child: Visibility(
-                    visible: _isLoading == false,
-                    replacement: const Center(
-                      child: CircularProgressIndicator(),
+    return PopScope(
+      canPop: false,
+      onPopInvoked: (didPop){
+        if(didPop){
+          return;
+        }
+        Navigator.pop(context, _shouldRefreshNewTask);
+      },
+      child: Scaffold(
+        appBar: ProfileBar, // Use AppBar widget
+        body: backgroundImage(
+          child: SingleChildScrollView(
+            child: Padding(
+              padding: const EdgeInsets.all(24.0),
+              child: Form(
+                key: _formKey,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const SizedBox(height: 100),
+                    Text(
+                      'Add New Task',
+                      style: Theme.of(context)
+                          .textTheme
+                          .titleLarge
+                          ?.copyWith(fontSize: 24),
                     ),
-                    child: ElevatedButton(
-                      onPressed: () {
-                        if(_formKey.currentState!.validate()){
-                          _addNewTask();
+                    const SizedBox(
+                      height: 16,
+                    ),
+                    TextFormField(
+                      validator: (String? value){
+                        if(value?.trim().isEmpty ?? true){
+                          return 'Enter your Title';
                         }
+                        return null;
                       },
-                      child: const Icon(Icons.arrow_circle_right_outlined),
+                      controller: _titleController,
+                      decoration: const InputDecoration(
+                        labelText: 'Task Title',
+                        hintText: 'Enter the title of the task',
+                      ),
                     ),
-                  ),
+                    const SizedBox(
+                      height: 16,
+                    ),
+                    TextFormField(
+                      validator: (String? value){
+                        if(value?.trim().isEmpty ?? true){
+                          return 'Enter your Description';
+                        }
+                        return null;
+                      },
+                      controller: _descriptionController,
+                      maxLines: 6,
+                      decoration: const InputDecoration(
+                        labelText: 'Task Description',
+                        hintText: 'Enter the description of the task',
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 16,
+                    ),
+                    SizedBox(
+                      width: double.infinity,
+                      child: Visibility(
+                        visible: _isLoading == false,
+                        replacement: const Center(
+                          child: CircularProgressIndicator(),
+                        ),
+                        child: ElevatedButton(
+                          onPressed: () {
+                            if(_formKey.currentState!.validate()){
+                              _addNewTask();
+                            }
+                          },
+                          child: const Icon(Icons.arrow_circle_right_outlined),
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
-              ],
+              ),
             ),
           ),
         ),
@@ -117,6 +129,7 @@ class _AddNewTaskScreenState extends State<AddNewTaskScreen> {
     setState(() {});
 
     if(response.isSuccess){
+      _shouldRefreshNewTask = true;
       _titleController.clear();
       _descriptionController.clear();
       if(mounted){
