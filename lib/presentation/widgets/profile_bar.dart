@@ -9,6 +9,10 @@ import 'package:real_world_projects/presentation/screens/profile_screen.dart'; /
 import '../utils/app_color.dart';
 
 PreferredSizeWidget get ProfileBar {
+  String base64Image = AuthController.userData!.photo!;
+  if (base64Image.startsWith('data:image/png;base64,')) {
+    base64Image = base64Image.substring('data:image/png;base64,'.length);
+  }
   return PreferredSize(
     preferredSize:
     const Size.fromHeight(kToolbarHeight), // Set the height of the AppBar
@@ -26,7 +30,7 @@ PreferredSizeWidget get ProfileBar {
         title:  Row(
           children: [
              CircleAvatar(
-              backgroundImage: MemoryImage(base64Decode(AuthController.userData!.photo!),),
+              backgroundImage: MemoryImage(base64Decode(base64Image)),
             ),
             const SizedBox(
               width: 10,

@@ -5,6 +5,10 @@ import 'package:real_world_projects/presentation/utils/app_color.dart';
 import 'package:real_world_projects/presentation/widgets/background_widget.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 
+import '../../../data/services/network_caller.dart';
+import '../../../data/utility/urls.dart';
+import '../../widgets/snack_bar_massage.dart';
+
 class PinVerificationScreen extends StatefulWidget {
   const PinVerificationScreen({super.key});
 
@@ -15,6 +19,7 @@ class PinVerificationScreen extends StatefulWidget {
 class _PinVerificationScreenState extends State<PinVerificationScreen> {
   final _pinController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
+  bool _pinVerificationInProgress = false;
 
   @override
   Widget build(BuildContext context) {
@@ -51,12 +56,19 @@ class _PinVerificationScreenState extends State<PinVerificationScreen> {
                     height: 24,
                   ),
                   PinCodeTextField(
+                    validator: (String? value) {
+                      if (value?.trim().isEmpty ?? true) {
+                        return 'Enter the pin';
+                      }
+                      return null;
+                    },
                     animationType: AnimationType.fade,
                     animationDuration: const Duration(milliseconds: 300),
                     appContext: context,
                     length: 6,
                     controller: _pinController,
                     keyboardType: TextInputType.number,
+                    backgroundColor: Colors.transparent,
                     pinTheme: PinTheme(
                       shape: PinCodeFieldShape.box,
                       borderRadius: BorderRadius.circular(10),
@@ -72,16 +84,30 @@ class _PinVerificationScreenState extends State<PinVerificationScreen> {
                   ),
                   SizedBox(
                     width: double.infinity,
-                    child: ElevatedButton(
-                      onPressed: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => const SetPasswordScreen(),
-                          ),
-                        );
-                      },
-                      child: const Text('Verify'),
+                    child: Visibility(
+                      visible: _pinVerificationInProgress == false,
+                      replacement: const Center(
+                        child: CircularProgressIndicator(),
+                      ),
+                      child: ElevatedButton(
+                        onPressed: () async {
+                          if (_formKey.currentState!.validate()) {
+                            bool isPinValid = await checkPinCode(
+                                'email', int.parse(_pinController.text));
+                            if (isPinValid) {
+                              Navigator.pushAndRemoveUntil(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) =>
+                                      const SetPasswordScreen(),
+                                ),
+                                (route) => false,
+                              );
+                            }
+                          }
+                        },
+                        child: const Text('Verify'),
+                      ),
                     ),
                   ),
                   const SizedBox(
@@ -123,5 +149,22 @@ class _PinVerificationScreenState extends State<PinVerificationScreen> {
   void dispose() {
     _pinController.dispose();
     super.dispose();
+  }
+
+  Future<bool> checkPinCode(String email, int otp) async {
+    _pinVerificationInProgress = true;
+    setState(() {});
+    final response =
+        await NetworkCaller.getRequest(Urls.verifyPinCodeEmail(email, otp));
+    _pinVerificationInProgress = false;
+    setState(() {});
+    if (response.responseBody['status'] == 'success') {
+      return true;
+    } else {
+      if (mounted) {
+        showSnackBarMessage(context, response.responseBody['data'], true);
+      }
+      return false;
+    }
   }
 }

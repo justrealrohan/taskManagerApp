@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:real_world_projects/presentation/screens/cancelled_task_screen.dart';
-import 'package:real_world_projects/presentation/screens/complete_task_screen.dart';
-import 'package:real_world_projects/presentation/screens/new_task_screen.dart';
-import 'package:real_world_projects/presentation/screens/progress_task_screen.dart';
+import 'package:real_world_projects/presentation/screens/cancelled_screen.dart';
+import 'package:real_world_projects/presentation/screens/completed_screen.dart';
+import 'package:real_world_projects/presentation/screens/new_screen.dart';
+import 'package:real_world_projects/presentation/screens/progress_screen.dart';
 import 'package:real_world_projects/presentation/utils/app_color.dart';
 
 class MainBottomNavScreen extends StatefulWidget {

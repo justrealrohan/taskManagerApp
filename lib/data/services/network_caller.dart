@@ -51,8 +51,8 @@ class NetworkCaller {
     }
   }
 
-  static Future<ResponseObject> postRequest(
-      String url, Map<String, dynamic> body,
+  static Future<ResponseObject> postRequest(String url,
+      Map<String, dynamic> body,
       {bool fromSignIn = false}) async {
     try {
       log('URL: $url');
@@ -115,6 +115,7 @@ class NetworkCaller {
         MaterialPageRoute(
           builder: (context) => const SignInScreen(),
         ) as String,
-        (route) => false);
+            (route) => false);
   }
+
 }
