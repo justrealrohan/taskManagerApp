@@ -111,7 +111,7 @@ class _ProgressTaskScreenState extends State<ProgressTaskScreen> {
   Future<void> _getAllProgressTaskList() async {
     _getAllProgressTaskListInProgress = true;
     setState(() {});
-    final response = await NetworkCaller.getRequest(Urls.completedTaskList);
+    final response = await NetworkCaller.getRequest(Urls.progressTaskList);
     if (response.isSuccess) {
       _progressTaskListWrapper =
           TaskListWrapper.fromJson(response.responseBody);

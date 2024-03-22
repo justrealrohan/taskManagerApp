@@ -110,7 +110,7 @@ class _CancelledTaskScreenState extends State<CancelledTaskScreen> {
   Future<void> _getAllCancelledTaskList() async {
     _getAllCancelledTaskListInProgress = true;
     setState(() {});
-    final response = await NetworkCaller.getRequest(Urls.cancelledTaskList as String);
+    final response = await NetworkCaller.getRequest(Urls.cancelledTaskList);
     if (response.isSuccess) {
       _cancelledTaskListWrapper =
           TaskListWrapper.fromJson(response.responseBody);
