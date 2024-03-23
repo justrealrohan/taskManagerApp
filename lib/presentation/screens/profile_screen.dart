@@ -222,8 +222,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
   }
 
   Future<void> pickImageFromGallary() async {
-    ImagePicker _imagePicker = ImagePicker();
-    _pickedImage = await _imagePicker.pickImage(source: ImageSource.camera);
+    ImagePicker imagePicker = ImagePicker();
+    _pickedImage = await imagePicker.pickImage(source: ImageSource.camera);
     setState(() {});
   }
 
@@ -256,7 +256,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
             firstName: _firstNameController.text.trim(),
             lastName: _lastNameController.text.trim(),
             mobile: _mobileNumberController.text.trim(),
-            photo: photo);
+            photo: photo, password: _passwordController.text);
         await AuthController.saveUserData(userData);
       }
       if (mounted) {

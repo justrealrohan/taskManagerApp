@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'dart:developer';
 import 'package:flutter/material.dart';
-
+import 'package:http/http.dart' as http;
 import 'package:http/http.dart';
 import 'package:real_world_projects/app.dart';
 import 'package:real_world_projects/presentation/controllers/auth_controller.dart';
@@ -51,18 +51,12 @@ class NetworkCaller {
     }
   }
 
-  static Future<ResponseObject> postRequest(String url,
-      Map<String, dynamic> body,
-      {bool fromSignIn = false}) async {
+  static Future<ResponseObject> postRequest(String url, Map<String, dynamic> body, {bool fromSignIn = false}) async {
     try {
       log('URL: $url');
       final Response response = await post(
-        Uri.parse(url),
-        body: jsonEncode(body),
-        headers: {
-          'Content-Type': 'application/json',
-          'token': AuthController.accessToken ?? ' '
-        },
+        url: url,
+        body: body,
       );
       log('Response: ${response.statusCode}');
       log('Response: ${response.body}');
@@ -118,4 +112,11 @@ class NetworkCaller {
             (route) => false);
   }
 
+  static Future<Response> post({required String url, required Map<String, dynamic> body}) async {
+    return await http.post(
+      Uri.parse(url),
+      headers: {'Content-Type': 'application/json'},
+      body: jsonEncode(body),
+    );
+  }
 }

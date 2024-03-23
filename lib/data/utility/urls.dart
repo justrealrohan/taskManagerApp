@@ -11,6 +11,7 @@ class Urls {
   static String cancelledTaskList  = '$baseUrl/listTaskByStatus/Cancelled';
   static String progressTaskList = '$baseUrl/listTaskByStatus/Progress';
   static String updateProfile = '$baseUrl/profileUpdate';
-  static String sendPinCodeEmail(email) => '$baseUrl/RecoverVerifyEmail/$email';
-  static String verifyPinCodeEmail(String email, int otp) => '$baseUrl/RecoverVerifyOTP/$email/$otp';
+  static String sendPinCodeToEmail(email) => '$baseUrl/RecoverVerifyEmail/$email';
+  static String verifyPinCode(String email, int otp) => '$baseUrl/RecoverVerifyOTP/$email/$otp';
+  static String resetPassword = '$baseUrl/RecoverResetPass';
 }

@@ -26,7 +26,7 @@ class _TaskManagerState extends State<TaskManager> {
       home: const Splash_Screen(),
       theme: ThemeData(
         appBarTheme: const AppBarTheme(
-          iconTheme: const IconThemeData(
+          iconTheme: IconThemeData(
             color: Colors.white,
           ),
         ),

@@ -10,9 +10,4 @@ class ResponseObject {
     this.errorMessage = '',
     required this.isSuccess,
   });
-
-  @override
-  String toString() {
-    return 'ResponseObject: {isSuccess: $isSuccess, responseBody: $responseBody}';
-  }
 }

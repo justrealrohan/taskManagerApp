@@ -6,7 +6,6 @@ import '../../../data/services/network_caller.dart';
 import '../../../data/utility/urls.dart';
 import '../../widgets/snack_bar_massage.dart';
 
-
 class EmailVerificationScreen extends StatefulWidget {
   const EmailVerificationScreen({super.key});
 
@@ -81,13 +80,7 @@ class _EmailVerificationScreenState extends State<EmailVerificationScreen> {
                       child: ElevatedButton(
                         onPressed: () {
                           if (_formKey.currentState!.validate()) {
-                            sendPinCodeEmail(_emailController.text);
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => const PinVerificationScreen(),
-                              ),
-                            );
+                            sendPinCodeToEmail(_emailController.text);
                           }
                         },
                         child: const Icon(Icons.arrow_circle_right_outlined),
@@ -124,22 +117,27 @@ class _EmailVerificationScreenState extends State<EmailVerificationScreen> {
     );
   }
 
-  Future<void> sendPinCodeEmail(String email) async {
+  Future<void> sendPinCodeToEmail(String email) async {
     _emailVerificationInProgress = true;
     setState(() {});
-    final response = await NetworkCaller.getRequest(Urls.sendPinCodeEmail(email),);
-    if(response.isSuccess){
-      _emailVerificationInProgress = false;
-      setState(() {});
-    }
-    else{
-      _emailVerificationInProgress = false;
-      setState(() {});
-      if(mounted){
-        showSnackBarMessage(context, 'Email verification has been failed', true);
+    final response = await NetworkCaller.getRequest(
+      Urls.sendPinCodeToEmail(email),
+    );
+    _emailVerificationInProgress = false;
+    setState(() {});
+    if (response.isSuccess) {
+      if (mounted) {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => const PinVerificationScreen(),
+          ),
+        );
       }
+    } else {
+      showSnackBarMessage(context, 'Invalid Email', true);
     }
-}
+  }
 
   @override
   void dispose() {

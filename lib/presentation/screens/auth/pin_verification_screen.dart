@@ -145,26 +145,24 @@ class _PinVerificationScreenState extends State<PinVerificationScreen> {
     );
   }
 
+Future<bool> checkPinCode(String email, int otp) async {
+  _pinVerificationInProgress = true;
+  setState(() {});
+  final response = await NetworkCaller.getRequest(Urls.verifyPinCode(email, otp));
+  _pinVerificationInProgress = false;
+  setState(() {});
+  if (response.isSuccess) {
+    return true;
+  } else {
+    if (mounted) {
+      showSnackBarMessage(context, 'Pin verification has been failed', true);
+    }
+    return false;
+  }
+}
   @override
   void dispose() {
     _pinController.dispose();
     super.dispose();
-  }
-
-  Future<bool> checkPinCode(String email, int otp) async {
-    _pinVerificationInProgress = true;
-    setState(() {});
-    final response =
-        await NetworkCaller.getRequest(Urls.verifyPinCodeEmail(email, otp));
-    _pinVerificationInProgress = false;
-    setState(() {});
-    if (response.responseBody['status'] == 'success') {
-      return true;
-    } else {
-      if (mounted) {
-        showSnackBarMessage(context, response.responseBody['data'], true);
-      }
-      return false;
-    }
   }
 }
