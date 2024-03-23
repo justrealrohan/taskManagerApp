@@ -10,7 +10,9 @@ import '../../../data/utility/urls.dart';
 import '../../widgets/snack_bar_massage.dart';
 
 class PinVerificationScreen extends StatefulWidget {
-  const PinVerificationScreen({super.key});
+  const PinVerificationScreen({super.key, required this.email});
+
+  final String email;
 
   @override
   State<PinVerificationScreen> createState() => _PinVerificationScreenState();
@@ -93,7 +95,7 @@ class _PinVerificationScreenState extends State<PinVerificationScreen> {
                         onPressed: () async {
                           if (_formKey.currentState!.validate()) {
                             bool isPinValid = await checkPinCode(
-                                'email', int.parse(_pinController.text));
+                                widget.email, int.parse(_pinController.text),);
                             if (isPinValid) {
                               Navigator.pushAndRemoveUntil(
                                 context,
@@ -151,7 +153,7 @@ Future<bool> checkPinCode(String email, int otp) async {
   final response = await NetworkCaller.getRequest(Urls.verifyPinCode(email, otp));
   _pinVerificationInProgress = false;
   setState(() {});
-  if (response.isSuccess) {
+  if (response.responseBody['status'] == 'success') {
     return true;
   } else {
     if (mounted) {

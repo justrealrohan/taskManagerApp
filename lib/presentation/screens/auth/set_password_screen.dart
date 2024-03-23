@@ -151,13 +151,13 @@ class _SetPasswordScreenState extends State<SetPasswordScreen> {
     );
   }
 
-  void _setPassword() async {
+  Future<void> _setPassword() async {
     setState(() {
       _passwordSettingInProgress = true;
     });
-    final response = await NetworkCaller.post(
-      url: Urls.resetPassword,
-      body: {
+   final response = await NetworkCaller.postRequest(
+      Urls.resetPassword,
+      {
         'password': _newPasswordController.text,
       },
     );

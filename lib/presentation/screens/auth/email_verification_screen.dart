@@ -130,7 +130,7 @@ class _EmailVerificationScreenState extends State<EmailVerificationScreen> {
         Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (context) => const PinVerificationScreen(),
+            builder: (context) => PinVerificationScreen(email: email,),
           ),
         );
       }
